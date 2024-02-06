@@ -1,47 +1,14 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
+import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
 import App from "./App";
-import { configureStore } from "@reduxjs/toolkit";
+import store from "./store";
 
-const add = () => {
-    return {
-        type: "ADD",
-    };
-};
-
-const remove = () => {
-    return {
-        type: "REMOVE",
-    };
-};
-
-const initialState = 0;
-
-const reducer = (state = initialState, action) => {
-    switch (action.type) {
-        case "ADD":
-            return state + 1;
-        case "REMOVE":
-            return state - 1;
-        default:
-            return state;
-    }
-};
-
-let store = configureStore({ reducer });
-
-store.subscribe(() => console.log(store.getState()));
-
-store.dispatch(add());
-store.dispatch(remove());
-store.dispatch(add());
-store.dispatch(add());
-store.dispatch(add());
-
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
     <React.StrictMode>
-        <App />
-    </React.StrictMode>,
-    document.getElementById("root")
+        <Provider store={store}>
+            <App />
+        </Provider>
+    </React.StrictMode>
 );
